@@ -1,0 +1,41 @@
+Checkpoint1
+1)  Modo Real: modo en el que arrancan todos los x86, después de un power-up o reset.
+    -Trabaja por defecto en 16 bits
+    -Podemos direccionar hasta 1MB de memoria
+    -Los modos de direccionamiento son más limitados que en modo protegido
+    -No hay protección de memoria ni niveles de privilegio
+
+    Modo protegido: este modo es el estado nativo del procesador
+    -Podemos direccionar hasta 4GB de memoria
+    -Hay 4 niveles de privilegio , para interrupciones y para set de instrucciones.
+
+2) Quiero trabajar a 32 bits, los 4GB de memoria, y los sitemas de proteccion que ofrece (set de instrucciones , accesos a memoria e interrupciones) .
+
+3) GDT : Tabla global de descriptores (describe los segmentos de la memoria)
+        Formato:
+            uint16_t limit_15_0;
+            uint16_t base_15_0;
+            uint8_t base_23_16;
+            uint8_t type : 4;
+            uint8_t s : 1;
+            uint8_t dpl : 2;
+            uint8_t p : 1;
+            uint8_t limit_19_16 : 4;
+            uint8_t avl : 1;
+            uint8_t l : 1;
+            uint8_t db : 1;
+            uint8_t g : 1;
+            uint8_t base_31_24;
+
+    Base: La primera direccion del segmento 
+    Limite: Maximo offset que el segmento tiene
+    G (Granularidad) : Cuando esta en 0 , el tamaño del segmento puede ser desde 1 Byte a 1 MBytes
+                        Cuando esta en 1 , el tamaño del segmento puede ser desde 4 KBytes a 4 GBytes
+    p (segmento presente) : si esta en 1 es que esta en la memoria, si no lo busca en la swap (hdd)
+    DPL : Nivel de privilegio del segmento
+    S (tipo) : indica si el segmento es de sistema (0 si , 1 codigo o data)
+
+4)1010 (excute/read)
+10) Carga en el registro gdt la direccion donde empieza la gdt
+13) si, hay que modificarlo hay que setear el bit menos significativo en 1
+20) 50 * 80 * 2 
